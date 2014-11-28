@@ -8,8 +8,7 @@
  *
  * Main module of the application.
  */
-angular
-  .module('2048CloneApp', [
+angular.module('2048CloneApp', [
     'ngAnimate',
     'ngCookies',
     'ngResource',
@@ -17,15 +16,15 @@ angular
     'ngSanitize',
     'ngTouch'
   ])
+  .controller('GameController', function(GameManager) {
+    this.game = GameManager;
+  })
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
-      })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl'
+        controller: 'GameController',
+        controllerAs: 'gameCtrl'
       })
       .otherwise({
         redirectTo: '/'
