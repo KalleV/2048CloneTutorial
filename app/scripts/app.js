@@ -14,7 +14,9 @@ angular.module('2048CloneApp', [
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'Game',
+    'Grid'
   ])
   .controller('GameController', function(GameManager) {
     this.game = GameManager;
@@ -25,8 +27,5 @@ angular.module('2048CloneApp', [
         templateUrl: 'views/main.html',
         controller: 'GameController',
         controllerAs: 'gameCtrl'
-      })
-      .otherwise({
-        redirectTo: '/'
       });
   });

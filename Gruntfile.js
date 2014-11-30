@@ -27,6 +27,17 @@ module.exports = function (grunt) {
     // Project settings
     yeoman: appConfig,
 
+    sass: {
+      options: {
+        sourceMap: true
+      },
+      dist: {
+        files: {
+          '<%= yeoman.app %>/styles/main.css': '<%= yeoman.app %>/styles/main.scss'
+        }
+      }
+    },
+
     // Watches files for changes and runs tasks based on the changed files
     watch: {
       bower: {
@@ -39,6 +50,10 @@ module.exports = function (grunt) {
         options: {
           livereload: '<%= connect.options.livereload %>'
         }
+      },
+      sass: {
+        files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
+        tasks: ['sass:dist']
       },
       jsTest: {
         files: ['test/spec/{,*/}*.js'],
@@ -215,7 +230,7 @@ module.exports = function (grunt) {
     // cssmin: {
     //   dist: {
     //     files: {
-    //       '<%= yeoman.dist %>/styles/main.css': [
+    //       '<%= yeoman.dist %>/styles/main.scss': [
     //         '.tmp/styles/{,*/}*.css'
     //       ]
     //     }
@@ -354,6 +369,7 @@ module.exports = function (grunt) {
     }
   });
 
+  grunt.registerTask('default', ['sass']);
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
