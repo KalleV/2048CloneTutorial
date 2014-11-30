@@ -2,7 +2,7 @@
 
   'use strict';
 
-  function Grid() {
+  function grid() {
     return {
       restrict: 'A',
       require: 'ngModel',
@@ -13,6 +13,6 @@
     };
   }
 
-  angular.module('Grid').directive('grid', Grid);
+  angular.module('Grid').directive('grid', grid);
 
 })();
