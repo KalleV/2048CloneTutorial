@@ -6,6 +6,10 @@
     this.tileModel = TileModel;
     this.grid = [];
     this.tiles = [];
+
+    this.grid.push(null);
+    this.tiles.push(new TileModel({x: 0, y: 0}, 2));
+
     this.size = 4;  // board size
     this.startingTileNumber = 2;
   }
@@ -77,7 +81,7 @@
     return emptySquareIndices;
   };
 
-  GridService.prototype._getRandomEmptySquareIndex = function(array) {
+  GridService.prototype._getRandomEmptySquareIndex = function() {
     var emptySquareIndices = this._getEmptySquareIndices();
     if (emptySquareIndices.length) {
       var idx = Math.floor(Math.random() * emptySquareIndices.length);

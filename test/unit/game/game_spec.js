@@ -15,6 +15,7 @@
           anyCellsAvailable: angular.noop,
           tileMatchesAvailable: angular.noop,
           buildEmptyGameBoard: angular.noop,
+          buildStartingPosition: angular.noop,
           getCellAt: angular.noop,
           setCellAt: angular.noop,
           reset: angular.noop,
@@ -47,20 +48,25 @@
       });
 
       describe('.newGame', function() {
-        it('resets the score to 0', function() {
+        beforeEach(function() {
+          spyOn(gridServiceMock, 'reset');
+          spyOn(gridServiceMock, 'buildEmptyGameBoard');
+          spyOn(gridServiceMock, 'buildStartingPosition');
           gameManager.score = 2048;
           gameManager.newGame();
+        });
+
+        it('resets the score to 0', function() {
           expect(gameManager.score).toBe(0);
         });
         it('resets the grid and tiles', function() {
-          spyOn(gridServiceMock, 'reset');
-          gameManager.newGame();
           expect(gridServiceMock.reset).toHaveBeenCalled();
         });
         it('creates an empty board', function() {
-          spyOn(gridServiceMock, 'buildEmptyGameBoard');
-          gameManager.newGame();
           expect(gridServiceMock.buildEmptyGameBoard).toHaveBeenCalled();
+        });
+        it('creates adds the initial tiles', function() {
+          expect(gridServiceMock.buildStartingPosition).toHaveBeenCalled();
         });
       });
 

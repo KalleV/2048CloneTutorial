@@ -11,6 +11,7 @@
     this.score = 0; // reset the score
     this.gridService.reset();
     this.gridService.buildEmptyGameBoard();
+    this.gridService.buildStartingPosition();
   };
 
   GameManager.prototype.move = function() {};

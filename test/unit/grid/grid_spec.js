@@ -10,16 +10,15 @@
         tile3,
         tile4;
 
-
     beforeEach(module('Grid'));
 
     beforeEach(inject(function(TileModel, GridService) {
       tileModel = TileModel;
       gridService = GridService;
-      tile1 = {pos: {x: 0, y: 0}, value: 2};
-      tile2 = {pos: {x: 1, y: 0}, value: 4};
-      tile3 = {pos: {x: 0, y: 1}, value: 2};
-      tile4 = {pos: {x: 1, y: 1}, value: 8};
+      tile1 = {x: 0, y: 0, value: 2};
+      tile2 = {x: 1, y: 0, value: 4};
+      tile3 = {x: 0, y: 1, value: 2};
+      tile4 = {x: 1, y: 1, value: 8};
     }));
 
     describe('.reset', function() {
@@ -33,6 +32,9 @@
     describe('.buildEmptyGameBoard', function() {
       var nullArray;
       beforeEach(function() {
+        gridService.size = 2;
+        gridService.grid = [];
+        gridService.tiles = [];
         nullArray = [];
         for (var i = 0; i < Math.pow(gridService.size, 2); i++) {
           nullArray.push(null);
@@ -114,22 +116,18 @@
 
     describe('.getCellAt', function() {
       beforeEach(function() {
-        gridService.size = 4;
+        gridService.size = 2;
         gridService.tiles = [tile1, tile2, tile3, tile4];
+      });
 
-        it('retrieves the tile at the given row and column', function() {
-          var tile = gridService.getCellAt({x:0, y:1});
-          expect(tile).toEqual(tile3);
-        });
+      it('retrieves the tile at the given row and column', function() {
+        var tile = gridService.getCellAt({x:0, y:1});
+        expect(tile).toEqual(tile3);
+      });
 
-        it('returns null if the pos is out of bounds', function() {
-          var tile = gridService.getCellAt({x:4, y:4});
-          expect(tile).toBe(null);
-        });
-
-        it('', function() {
-
-        });
+      it('returns null if the pos is out of bounds', function() {
+        var tile = gridService.getCellAt({x:4, y:4});
+        expect(tile).toBe(null);
       });
     });
 

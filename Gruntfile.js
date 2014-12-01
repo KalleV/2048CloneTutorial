@@ -28,15 +28,25 @@ module.exports = function (grunt) {
     yeoman: appConfig,
 
     sass: {
-      options: {
-        sourceMap: true
-      },
       dist: {
+        options: {
+          sourcemap: true
+        },
         files: {
           '<%= yeoman.app %>/styles/main.css': '<%= yeoman.app %>/styles/main.scss'
         }
       }
     },
+    //sass: {
+    //  options: {
+    //    sourceMap: true
+    //  },
+    //  dist: {
+    //    files: {
+    //      '<%= yeoman.app %>/styles/main.css': '<%= yeoman.app %>/styles/main.scss',
+    //    }
+    //  }
+    //},
 
     // Watches files for changes and runs tasks based on the changed files
     watch: {
@@ -369,6 +379,7 @@ module.exports = function (grunt) {
     }
   });
 
+  grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.registerTask('default', ['sass']);
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {

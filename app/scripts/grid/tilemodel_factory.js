@@ -2,7 +2,7 @@
 
   'use strict';
 
-  function tileModel() {
+  function TileModel() {
     var Tile = function(pos, val) {
       this.x = pos.x;
       this.y = pos.y;
@@ -12,6 +12,6 @@
     return Tile;
   }
 
-  angular.module('Grid').factory('TileModel', tileModel);
+  angular.module('Grid').factory('TileModel', TileModel);
 
 })();
