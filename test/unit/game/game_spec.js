@@ -1,4 +1,5 @@
 (function(){
+
   'use strict';
 
   describe('Game module', function() {
@@ -13,8 +14,13 @@
         gridServiceMock = {
           anyCellsAvailable: angular.noop,
           tileMatchesAvailable: angular.noop,
+          buildEmptyGameBoard: angular.noop,
+          getCellAt: angular.noop,
+          setCellAt: angular.noop,
           reset: angular.noop,
-          size: 4
+          size: 4,
+          grid: [],
+          tiles: []
         };
         $provide.value('GridService', gridServiceMock);
       }));
@@ -46,26 +52,32 @@
           gameManager.newGame();
           expect(gameManager.score).toBe(0);
         });
-        it('creates an empty board', function() {
+        it('resets the grid and tiles', function() {
+          spyOn(gridServiceMock, 'reset');
           gameManager.newGame();
-          for (var i = 0; i < gridServiceMock.size; i++) {
-            for (var j = 0; j < gridServiceMock.size; j++) {
-              expect(gridServiceMock.get(i, j)).toBe(0);
-            }
-          }
+          expect(gridServiceMock.reset).toHaveBeenCalled();
+        });
+        it('creates an empty board', function() {
+          spyOn(gridServiceMock, 'buildEmptyGameBoard');
+          gameManager.newGame();
+          expect(gridServiceMock.buildEmptyGameBoard).toHaveBeenCalled();
         });
       });
 
       describe('.move', function() {
-        it('moves all active tiles in the direction of the pressed arrow key', function() {
-          gridServiceMock.set(0, 1, 16);  // col, row, value
-          gridServiceMock.set(3, 1, 32);
-          gridServiceMock.set(1, 4, 2);
+        beforeEach(function() {
+          var tile1 = {pos: {x: 0, y: 0}, value: 2};
+          var tile2 = {pos: {x: 1, y: 0}, value: 4};
+          var tile3 = {pos: {x: 0, y: 1}, value: 2};
+          var tile4 = {pos: {x: 1, y: 1}, value: 8};
+          gridServiceMock.grid = [0, 0, 0, 0];
+          gridServiceMock.tiles = [tile1, tile2, tile3, tile4];
+          spyOn(gridServiceMock, 'setCellAt');
+        });
 
+        it('moves all active tiles in the direction of the pressed arrow key', function() {
           spyOn(ngKeypress, 'up').and.returnValue('up');
-          expect(gridServiceMock.get(0, 0)).toBe(16);
-          expect(gridServiceMock.get(3, 0)).toBe(32);
-          expect(gridServiceMock.get(1, 0)).toBe(2);
+          expect(gridServiceMock.setCellAt).toHaveBeenCalled();
         });
       });
 

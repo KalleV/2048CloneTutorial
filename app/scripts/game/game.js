@@ -10,6 +10,7 @@
   GameManager.prototype.newGame = function() {
     this.score = 0; // reset the score
     this.gridService.reset();
+    this.gridService.buildEmptyGameBoard();
   };
 
   GameManager.prototype.move = function() {};
