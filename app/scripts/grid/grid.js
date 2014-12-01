@@ -3,9 +3,11 @@
   'use strict';
 
   function GridService(TileModel) {
+    this.tileModel = TileModel;
     this.grid = [];
     this.tiles = [];
     this.size = 4;  // board size
+    this.startingTileNumber = 2;
   }
 
   GridService.prototype.reset = function() {
@@ -49,6 +51,40 @@
     this.forEach(function(x, y) {
       self.setCellAt({x: x, y: y}, null);
     });
+  };
+
+  GridService.prototype.buildStartingPosition = function() {
+    for (var idx = 0; idx < this.startingTileNumber; idx++) {
+      this.randomlyInsertNewTile();
+    }
+  };
+
+  GridService.prototype.randomlyInsertNewTile = function() {
+    // Randomly choose an index value from the remaining empty squares
+    var idx = this._getRandomEmptySquareIndex();
+
+    // Assign a new tile to one of the empty squares
+    this.tiles[idx] = new this.tileModel(this._positionToCoordinates(idx));
+  };
+
+  GridService.prototype._getEmptySquareIndices = function() {
+    var emptySquareIndices = [];
+    for (var i = 0; i < this.size * this.size; i++) {
+      if (!this.tiles[i]) {
+        emptySquareIndices.push(i);
+      }
+    }
+    return emptySquareIndices;
+  };
+
+  GridService.prototype._getRandomEmptySquareIndex = function(array) {
+    var emptySquareIndices = this._getEmptySquareIndices();
+    if (emptySquareIndices.length) {
+      var idx = Math.floor(Math.random() * emptySquareIndices.length);
+      return emptySquareIndices[idx];
+    } else {  // no empty squares available
+      return null;
+    }
   };
 
   /*

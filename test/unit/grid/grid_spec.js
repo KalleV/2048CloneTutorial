@@ -4,13 +4,22 @@
 
   describe('Service: GridService', function() {
     var tileModel,
-        gridService;
+        gridService,
+        tile1,
+        tile2,
+        tile3,
+        tile4;
+
 
     beforeEach(module('Grid'));
 
     beforeEach(inject(function(TileModel, GridService) {
       tileModel = TileModel;
       gridService = GridService;
+      tile1 = {pos: {x: 0, y: 0}, value: 2};
+      tile2 = {pos: {x: 1, y: 0}, value: 4};
+      tile3 = {pos: {x: 0, y: 1}, value: 2};
+      tile4 = {pos: {x: 1, y: 1}, value: 8};
     }));
 
     describe('.reset', function() {
@@ -48,6 +57,46 @@
 
     });
 
+    describe('.randomlyInsertNewTile', function() {
+      var tiles;
+
+      beforeEach(function() {
+        tiles = [null, null, null, null];
+        gridService.tiles = tiles;
+        gridService.size = 2;
+      });
+
+      it('randomly inserts a tile into the array of tiles (lower bound)', function() {
+        spyOn(Math, 'random').and.returnValue(0);
+        gridService.randomlyInsertNewTile();
+        var tile = new tileModel({x: 0, y: 0}, 2);
+        expect(gridService.tiles).toEqual([tile, null, null, null]);
+      });
+
+      it('randomly inserts a tile into the array of tiles (upper bound)', function() {
+        spyOn(Math, 'random').and.returnValue(0.99);
+        gridService.randomlyInsertNewTile();
+        var tile = new tileModel({x: 1, y: 1}, 2);
+        expect(gridService.tiles).toEqual([null, null, null, tile]);
+      });
+
+      it('correctly assigns x and y coordinates when tiles are already on the grid', function() {
+        spyOn(Math, 'random').and.returnValue(0.4);
+        gridService.tiles[0] = {x: 0, y: 0, value: 2};
+        gridService.randomlyInsertNewTile();
+        var newTile = new tileModel({x: 0, y: 1}, 2);
+        expect(gridService.tiles[2].x).toEqual(newTile.x);
+        expect(gridService.tiles[2].y).toEqual(newTile.y);
+      });
+
+      it('only inserts tiles into grid squares where tiles do not already exist', function() {
+        tiles = [tile1, tile2, null, tile4];
+        gridService.tiles = tiles;
+        gridService.randomlyInsertNewTile();
+        expect(gridService.tiles[2]).not.toBe(null);
+      });
+    });
+
     describe('.insideGrid', function() {
       beforeEach(function() {
         gridService.size = 4;
@@ -65,10 +114,6 @@
 
     describe('.getCellAt', function() {
       beforeEach(function() {
-        var tile1 = {pos: {x: 0, y: 0}, value: 2};
-        var tile2 = {pos: {x: 1, y: 0}, value: 4};
-        var tile3 = {pos: {x: 0, y: 1}, value: 2};
-        var tile4 = {pos: {x: 1, y: 1}, value: 8};
         gridService.size = 4;
         gridService.tiles = [tile1, tile2, tile3, tile4];
 
