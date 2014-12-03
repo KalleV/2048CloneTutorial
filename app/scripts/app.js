@@ -15,17 +15,17 @@ angular.module('2048CloneApp', [
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'Game',
-    'Grid'
+    'Grid',
+    'Game'
   ])
   .controller('GameController', function(GameManager) {
     this.game = GameManager;
-  })
-  .config(function ($routeProvider) {
-    $routeProvider
-      .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'GameController',
-        controllerAs: 'gameCtrl'
-      });
   });
+  //.config(function ($routeProvider) {
+  //  $routeProvider
+  //    .when('/', {
+  //      templateUrl: 'views/main.html',
+  //      controller: 'GameController',
+  //      controllerAs: 'gameCtrl'
+  //    });
+  //});

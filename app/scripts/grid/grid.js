@@ -2,6 +2,7 @@
 
   'use strict';
 
+  // Error: The TileModel needs to become available BEFORE the GridService is instantiated
   function GridService(TileModel) {
     this.tileModel = TileModel;
     this.grid = [];

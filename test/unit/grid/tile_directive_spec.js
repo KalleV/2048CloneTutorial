@@ -7,12 +7,12 @@
     var ngModel,
         html,
         $rootScope,
-        element,
+        //element,
         $element,
         scope,
         tile;
 
-    beforeEach(module('Grid'));
+    beforeEach(module('2048CloneApp')); //'Grid'));
 
     beforeEach(inject(function($httpBackend, $compile, _$rootScope_) {
       $rootScope = _$rootScope_;
@@ -28,11 +28,12 @@
       tile = {x: 0, y: 0, value: 2};
 
 //      ngModel = {x: 0, y: 0, value: 2};
-      $rootScope.ngModel = tile;
+//      $rootScope.ngModel = tile;
+      $rootScope.tile = tile;
 
       html = '<div tile ng-model="tile"></div>';
       $element = angular.element(html);
-      console.log(angular.element('<div>name</div>')[0]);
+      //console.log(angular.element('<div>name</div>')[0]);
 
       //html = '<div tile></div>';
 
@@ -40,7 +41,8 @@
       //$rootScope.ngModel = ngModel;
 
       //scope.ngModel = tile;
-      element = $compile($element)(scope); //$rootScope);
+      //element =
+      $compile($element)(scope);  //$rootScope);
       $rootScope.$apply();
       //$rootScope.$digest();
 
@@ -52,14 +54,14 @@
     //https://egghead.io/lessons/angularjs-unit-testing-directive-scope
     //http://stackoverflow.com/questions/17371836/how-to-unit-test-isolated-scope-directive-in-angularjs
     it('assigns the tile to the directive\'s ngModel in the directive\'s inner scope', function() {
-//      console.log(element.scope().ngModel);
       console.log($element.isolateScope());
-      expect(element.scope().ngModel).toBeDefined();
+      console.log($element);
+      expect($element.scope().myAttr).toBeDefined();
     });
 
     it('adds the x, y, and value properties to the class names', function() {
       //console.log(angular.element(element), scope);
-      expect(angular.element(element.getElementsByClassName('tile position-0-0 tile-2'))).toBe(1);
+      expect(angular.element($element.getElementsByClassName('tile position-0-0 tile-2'))).toBe(1);
       console.log(element.isolateScope());
     });
 
