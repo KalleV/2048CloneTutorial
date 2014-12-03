@@ -4,11 +4,15 @@
 
   function GameManager(GridService) {
     this.gridService = GridService;
-    this.score = 0;
+    this.currentScore = 0;
+    this.highScore = 0;
+    this.grid = GridService.grid;
+    this.tiles = GridService.tiles;
+    this.newGame();
   }
 
   GameManager.prototype.newGame = function() {
-    this.score = 0; // reset the score
+    this.currentScore = 0; // reset the score
     this.gridService.reset();
     this.gridService.buildEmptyGameBoard();
     this.gridService.buildStartingPosition();

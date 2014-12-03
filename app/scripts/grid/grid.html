@@ -1,15 +1,13 @@
 <div id="game">
+
+  {{ngModel.grid}}
   <div class="grid-container">
-    {{ngModel.grid}}
     <div class="grid-cell"
          ng-repeat="cell in ngModel.grid track by $index">
     </div>
   </div>
   <div class="tile-container">
     <!-- <div class="position-1-1 tile unstyled-tile">1, 1</div> -->
-
-    <div ng-repeat="tile in ngModel.tiles track by $index">
-    </div>
 
     <div tile
       ng-model="tile"

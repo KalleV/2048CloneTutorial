@@ -2,7 +2,16 @@
 
   'use strict';
 
-  // Error: The TileModel needs to become available BEFORE the GridService is instantiated
+  function TileModel() {
+    var Tile = function(pos, val) {
+      this.x = pos.x;
+      this.y = pos.y;
+      this.value = val || 2;
+    };
+
+    return Tile;
+  }
+
   function GridService(TileModel) {
     this.tileModel = TileModel;
     this.grid = [];
@@ -10,6 +19,7 @@
 
     this.grid.push(null);
     this.tiles.push(new TileModel({x: 0, y: 0}, 2));
+    this.tiles.push(new TileModel({x: 1, y: 0}, 2));
 
     this.size = 4;  // board size
     this.startingTileNumber = 2;
@@ -103,6 +113,8 @@
     }
   };
 
-  angular.module('Grid', []).service('GridService', GridService);
+  angular.module('Grid', [])
+    .factory('TileModel', TileModel)
+    .service('GridService', GridService);
 
 })();

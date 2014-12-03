@@ -5,7 +5,7 @@
   function grid() {
     return {
       restrict: 'A',
-      require: 'ngModel',
+      require: '^ngModel',
       scope: {
         ngModel: '='
       },

@@ -1,5 +1,10 @@
 @charset "UTF-8";
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
+
+* {
+  border: 2px black solid !important;
+}
+
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;

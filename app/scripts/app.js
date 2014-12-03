@@ -20,6 +20,7 @@ angular.module('2048CloneApp', [
   ])
   .controller('GameController', function(GameManager) {
     this.game = GameManager;
+    this.game.newGame();
   });
   //.config(function ($routeProvider) {
   //  $routeProvider

@@ -52,12 +52,12 @@
           spyOn(gridServiceMock, 'reset');
           spyOn(gridServiceMock, 'buildEmptyGameBoard');
           spyOn(gridServiceMock, 'buildStartingPosition');
-          gameManager.score = 2048;
+          gameManager.currentScore = 2048;
           gameManager.newGame();
         });
 
         it('resets the score to 0', function() {
-          expect(gameManager.score).toBe(0);
+          expect(gameManager.currentScore).toBe(0);
         });
         it('resets the grid and tiles', function() {
           expect(gridServiceMock.reset).toHaveBeenCalled();
