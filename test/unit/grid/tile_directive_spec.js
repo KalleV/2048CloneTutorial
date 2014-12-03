@@ -12,6 +12,8 @@
 
     beforeEach(module('Grid'));
 
+    beforeEach(module('templates'));
+
     beforeEach(inject(function($httpBackend, $compile, $rootScope) {
       //$httpBackend.whenGET('scripts/grid/tile.html')
       //  .respond('<div ng-if="ngModel" class="tile position-{{ngModel.x}}-{{ngModel.y}} tile-{{ngModel.value}}">' +
