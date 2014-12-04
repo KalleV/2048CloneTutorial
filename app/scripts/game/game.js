@@ -8,7 +8,7 @@
     this.highScore = 0;
     this.grid = GridService.grid;
     this.tiles = GridService.tiles;
-    this.newGame();
+    //this.newGame();
   }
 
   GameManager.prototype.newGame = function() {
@@ -20,7 +20,9 @@
 
   GameManager.prototype.move = function() {};
 
-  GameManager.prototype.updateScore = function() {};
+  GameManager.prototype.updateScore = function(newScore) {
+    this.currentScore = newScore;
+  };
 
   GameManager.prototype.movesAvailable = function() {
     return (this.gridService.anyCellsAvailable() ||

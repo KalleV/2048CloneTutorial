@@ -90,9 +90,9 @@
       describe('.updateScore', function() {
         it('changes the displayed score', function() {
           var newScore = 2048;
-          gameManager.score = 0;
+          gameManager.currentScore = 0;
           gameManager.updateScore(newScore);
-          expect(gameManager.score).toBe(2048);
+          expect(gameManager.currentScore).toBe(2048);
         });
       });
 

@@ -22,11 +22,3 @@ angular.module('2048CloneApp', [
     this.game = GameManager;
     this.game.newGame();
   });
-  //.config(function ($routeProvider) {
-  //  $routeProvider
-  //    .when('/', {
-  //      templateUrl: 'views/main.html',
-  //      controller: 'GameController',
-  //      controllerAs: 'gameCtrl'
-  //    });
-  //});
