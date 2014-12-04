@@ -11,7 +11,7 @@ module.exports = function(config) {
     autoWatch: true,
 
     preprocessors: {
-      '**/*.html': ['ng-html2js']
+      'app/**/*.html': ['ng-html2js']
     },
 
     ngHtml2JsPreprocessor: {
@@ -37,7 +37,7 @@ module.exports = function(config) {
       'bower_components/angular-touch/angular-touch.js',
       'app/scripts/**/*.js',
       'test/unit/**/*.js',
-      '**/*.html'
+      'app/**/*.html'
     ],
 
     // list of files / patterns to exclude
