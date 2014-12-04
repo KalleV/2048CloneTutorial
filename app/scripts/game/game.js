@@ -8,7 +8,6 @@
     this.highScore = 0;
     this.grid = GridService.grid;
     this.tiles = GridService.tiles;
-    //this.newGame();
   }
 
   GameManager.prototype.newGame = function() {
