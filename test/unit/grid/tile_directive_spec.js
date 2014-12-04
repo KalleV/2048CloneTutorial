@@ -35,6 +35,10 @@
       expect(angular.element(element[0].children[0]).hasClass('tile position-0-0 tile-2')).toBe(true);
     });
 
+    it('adds the tile value property to the inner div', function() {
+      expect(angular.element(element[0].children[0]).text().trim()).toBe('2');
+    });
+
   });
 
 })();
