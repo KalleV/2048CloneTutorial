@@ -39,47 +39,33 @@
 
     }));
 
+    beforeEach(function() {
+      outerScope.$apply(function() {
+        outerScope.gameCtrl.game.grid = [null, null, null, null];
+        outerScope.gameCtrl.game.tiles = [null, null, null, null];
+      });
+    });
+
     it('assigns the GameController game property to the directive\'s ngModel', function() {
       expect(innerScope.ngModel).toBeDefined();
     });
 
     it('retrieves the GameController game grid', function() {
-      outerScope.$apply(function() {
-        outerScope.gameCtrl.game.grid = [null, null, null, null];
-      });
       expect(innerScope.ngModel.grid).toEqual([null, null, null, null]);
     });
 
     it('retrieves the GameController game tiles', function() {
-      outerScope.$apply(function() {
-        outerScope.gameCtrl.game.tiles = [null, null, null, null];
-      });
       expect(innerScope.ngModel.tiles).toEqual([null, null, null, null]);
     });
 
-    it('creates divs for each grid cell stored in the ngModel grid', function() {
-      outerScope.$apply(function() {
-        outerScope.gameCtrl.game.grid = [null, null, null, null];
-      });
+    it('creates divs using ng-repeat for each grid cell stored in the game grid', function() {
       var gridContainer = angular.element(element[0].children[0].children[0]);
-      console.log('DIVS FOUND', gridContainer.find('div.grid-cell ng-scope'));
-      //console.log('length', $('.grid-container').find('div grid-cell').length);
-      expect(angular.element(element[0].children[0]).hasClass('tile position-0-0 tile-2')).toBe(true);
+      expect(gridContainer[0].querySelectorAll('div').length).toBe(4);
     });
 
-    it('creates divs for each grid tile stored in the ngModel tiles', function() {
-      //outerScope.$apply(function() {
-      //  outerScope.gameCtrl.game.tiles = [null, null, null, null];
-      //});
-
-      // add grid cells to the grid
-
-      // expect the count of div's with class 'grid-cell', within the div with a 'grid-container' class
-      // to be equal to the number of grid cells added to the grid
-    });
-
-    it('', function() {
-
+    it('creates divs using ng-repeat for each tile stored in the game tiles', function() {
+      var tileContainer = angular.element(element[0].children[0].children[1]);
+      expect(tileContainer[0].querySelectorAll('div').length).toBe(4);
     });
 
   });
