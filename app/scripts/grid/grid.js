@@ -23,6 +23,7 @@
 
     this.size = 4;  // board size
     this.startingTileNumber = 2;
+    this.defaultTileValue = 2;
   }
 
   GridService.prototype.reset = function() {
@@ -75,28 +76,30 @@
   };
 
   GridService.prototype.randomlyInsertNewTile = function() {
-    // Randomly choose an index value from the remaining empty squares
-    var idx = this._getRandomEmptySquareIndex();
+    // Randomly choose an (x, y) position from the available empty squares
+    var pos = this._getRandomEmptySquarePosition();
 
     // Assign a new tile to one of the empty squares
-    this.tiles[idx] = new this.tileModel(this._positionToCoordinates(idx));
+    this.setCellAt(pos, new this.tileModel(pos, this.defaultTileValue));
   };
 
-  GridService.prototype._getEmptySquareIndices = function() {
-    var emptySquareIndices = [];
-    for (var i = 0; i < this.size * this.size; i++) {
-      if (!this.tiles[i]) {
-        emptySquareIndices.push(i);
+  GridService.prototype._getEmptySquares = function() {
+    var self = this;
+    var emptySquares = [];
+    this.forEach(function(x, y) {
+      var tile = self.getCellAt({x: x, y: y});
+      if (!tile) {
+        emptySquares.push({x: x, y: y});
       }
-    }
-    return emptySquareIndices;
+    });
+    return emptySquares;
   };
 
-  GridService.prototype._getRandomEmptySquareIndex = function() {
-    var emptySquareIndices = this._getEmptySquareIndices();
-    if (emptySquareIndices.length) {
-      var idx = Math.floor(Math.random() * emptySquareIndices.length);
-      return emptySquareIndices[idx];
+  GridService.prototype._getRandomEmptySquarePosition = function() {
+    var emptySquares = this._getEmptySquares();
+    if (emptySquares.length) {
+      var idx = Math.floor(Math.random() * emptySquares.length);
+      return emptySquares[idx];
     } else {  // no empty squares available
       return null;
     }
@@ -106,10 +109,10 @@
    * @description Apply the given function to each grid square.
    */
   GridService.prototype.forEach = function(func) {
-    for (var row = 0; row < this.size; row++) {
-      for (var col = 0; col < this.size; col++) {
-        func(row, col);
-      }
+    var totalSize = this.size * this.size;
+    for (var idx = 0; idx < totalSize; idx++) {
+      var pos = this._positionToCoordinates(idx);
+      func(pos.x, pos.y, this.tiles[idx]);
     }
   };
 

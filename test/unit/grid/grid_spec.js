@@ -146,7 +146,7 @@
         expect(gridService.tiles[0]).toBe(tile);
       });
 
-      it('does not set a tiles if the given position is out of bounds', function() {
+      it('does not set tiles that are outside of the grid cells', function() {
         gridService.setCellAt({x:4, y:4}, tile);
         expect(gridService.tiles[16]).toBe(undefined);
       });
@@ -172,6 +172,38 @@
         var coordinate = gridService._coordinatesToPosition({x: 0, y: 1});
         expect(coordinate).toEqual(4);
       });
+    });
+
+    describe('._getEmptySquares', function() {
+      beforeEach(function() {
+        gridService.size = 2;
+      });
+
+      it('finds the (x, y) grid coordinates of the grid cells that do not have a tile in them', function() {
+        gridService.tiles = [null, tile2, tile3, null];
+        expect(gridService._getEmptySquares()).toEqual([{x:0, y:0}, {x:1, y:1}]);
+      });
+
+      it('does not find any empty (x, y) grid coordinates if none of the grid cells are empty', function() {
+        gridService.tiles = [tile1, tile2, tile3, tile4];
+        expect(gridService._getEmptySquares()).toEqual([]);
+      });
+    });
+
+    describe('._getRandomEmptySquarePosition', function() {
+
+      it('randomly chooses the (x, y) coordinate position of an empty grid square', function() {
+        spyOn(Math, 'random').and.returnValue(0);
+        spyOn(gridService, '_getEmptySquares').and.returnValue([{x: 0, y: 0}, {x: 1, y: 0}, {x: 0, y: 1}]);
+        expect(gridService._getRandomEmptySquarePosition()).toEqual({x: 0, y: 0});
+      });
+
+      it('returns null if no empty grid squares exist', function() {
+        spyOn(Math, 'random').and.returnValue(0.9);
+        spyOn(gridService, '_getEmptySquares').and.returnValue([]);
+        expect(gridService._getRandomEmptySquarePosition()).toEqual(null);
+      })
+
     });
 
   });
